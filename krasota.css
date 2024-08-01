@@ -1,0 +1,104 @@
+
+body{
+    background: linear-gradient(0deg, rgba(227,227,227,1) 0%, rgba(231,231,231,1) 25%, rgba(237,237,237,1) 50%, rgba(255,255,255,1) 100%);
+}
+.ValletDiv{
+    display: flex;
+width: 95vw;
+justify-content: space-around;
+}
+.HEAD{
+    width: 95vw;
+    height: 20vw;
+display: flex;
+align-items: center;
+justify-content: space-around;
+margin-bottom: 2vw;
+}
+#INPUT{
+    width: 50vw;
+    color: black;
+    font-size: 4vw;
+    text-shadow: none;
+    border-radius: 2vw;
+    border: solid rgb(196, 196, 196) 0.5vw;
+    background-color: rgb(238, 238, 238);
+}
+#INPUTbyn{
+    width: 42vw;
+    height: 12vw;
+    margin-right: 1vw;
+    font-size: 5vw;
+    color: black;
+    text-shadow: none;
+    border-radius: 2vw;
+    border: solid rgb(196, 196, 196) 0.5vw;
+    background-color: rgb(238, 238, 238);
+}
+#textByn{
+    font-size: 10vw;
+    font-weight: bolder;
+}
+.forAnotherVallets{
+    display: flex;
+   overflow-y: auto;
+   height: 180vw;
+    flex-direction: column;
+}
+.VallName{
+   margin-left: auto;
+   font-size: 4.5vw;
+  margin-right: 10vw;
+}
+.DivOsnova{
+    flex-direction: column;
+    display: flex;
+    width: 95vw;
+    margin-bottom: 2vw;
+}
+.ButtonAdd{
+    width: 10vw;
+    object-fit: cover;
+  
+}
+.Abbr{
+    font-size: 5vw;
+}
+.ChoiceVallets{
+    width: 50vw;
+    height: 50vw;
+    position: absolute;
+    background: linear-gradient(0deg, rgb(238, 238, 238) 0%, rgb(153, 153, 153) 100%);
+    top: -45vw;
+    left: 5vw;
+    overflow: scroll;
+    border: 0.2vw rgb(163, 163, 163) solid;
+}
+.ForCross{
+    width: 50vw;
+    height: 5vw;
+    background: linear-gradient(0deg, rgb(190, 190, 190) 0%, rgba(205,205,205,1) 100%);
+}
+.CloseButton{
+    margin-left: 45vw;
+    width: 5vw;
+    object-fit: contain;
+}
+.off{
+    display: none;
+}
+.ValletChoice{
+    border: 0.2vw solid rgb(221, 221, 221);
+    height: 12vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.Choiced{
+    background-color: gray;
+}
+.LoadGif{
+    width: 50vw;
+    object-fit: contain;
+    margin-left: 20vw;
+}
