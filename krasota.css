@@ -1,6 +1,19 @@
 
 body{
-    background: linear-gradient(0deg, rgba(227,227,227,1) 0%, rgba(231,231,231,1) 25%, rgba(237,237,237,1) 50%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(0deg, rgb(255, 255, 255) 0%, #2893d1 100%);
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;
+  }
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#InputColor{
+    width: 20vw;
+    height: 10vw;
 }
 .ValletDiv{
     display: flex;
@@ -42,7 +55,8 @@ margin-bottom: 2vw;
 .forAnotherVallets{
     display: flex;
    overflow-y: auto;
-   height: 180vw;
+   min-height: 80vw;
+  max-height: 180vw;
     flex-direction: column;
 }
 .VallName{
@@ -59,7 +73,7 @@ margin-bottom: 2vw;
 .ButtonAdd{
     width: 10vw;
     object-fit: cover;
-  
+    cursor: pointer;
 }
 .Abbr{
     font-size: 5vw;
@@ -83,6 +97,7 @@ margin-bottom: 2vw;
     margin-left: 45vw;
     width: 5vw;
     object-fit: contain;
+    cursor: pointer;
 }
 .off{
     display: none;
@@ -101,4 +116,14 @@ margin-bottom: 2vw;
     width: 50vw;
     object-fit: contain;
     margin-left: 20vw;
+}
+.DeleteButton{
+    margin-left: 45vw;
+    width: 5vw;
+    object-fit: contain;
+    cursor: pointer;
+  
+    margin-left: 80vw;
+    
+    
 }
