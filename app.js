@@ -13,6 +13,16 @@ function byField(fieldName){
 return (a, b) => a[fieldName] > b[fieldName] ? 1 : -1;
 }
 
+let UserVallets = undefined
+const DefaultVallet = ["USD","EUR"] // Currencies that appear by default
+if(localStorage.getItem("UserVallets") != undefined){
+   UserVallets = JSON.parse(localStorage.getItem("UserVallets"))
+}
+
+let BYNel =  getEl(".BYN")
+let Vallets = []
+
+
 
 function fillSelection(){
  let El = getEl(".ChoiceVallets")
@@ -29,19 +39,33 @@ for (let item of Vallets) {
   Name.innerText = item.Cur_Name
   
   ValletIndex = Vallets.findIndex(el => el.Cur_Abbreviation === item.Cur_Abbreviation)
+  div.id = `in${ValletIndex}`
 
-  div.addEventListener("click",() => {
+  div.addEventListener("click",(event) => {
+    let index = div.id.slice(2)
     div.classList.toggle("Choiced")
     if(div.dataset.choiced == "false"){
       div.dataset.choiced = "true"
-      CreateValletCurrency(item)
+      CreateValletCurrency(Vallets[index],true)
     }
     else{
-      getEl(`#Index${ValletIndex}`).remove()
+
+      if(getEl(`#Index${index}`) != null){
+      getEl(`#Index${index}`).remove()
+      }
       div.dataset.choiced = "false"
     }
+    SaveUserVallets()
   })
-
+if(UserVallets != undefined){
+  if(UserVallets.includes(item.Cur_Abbreviation)){
+    div.classList.toggle("Choiced")
+    if(div.dataset.choiced == "false"){
+      div.dataset.choiced = "true"
+    }
+  
+  }
+}
 
   El.append(div)
   div.append(Abbr)
@@ -50,12 +74,6 @@ for (let item of Vallets) {
   }
 }
 }
-
-
-const DefaultVallet = ["USD","EUR","RUB","UAH","TRY"] // Currencies that appear by default
-let BYNel =  getEl(".BYN")
-let Vallets = []
-
 
 
 async function GetValletArray(){
@@ -67,8 +85,13 @@ async function GetValletArray(){
     Vallets = arr1.concat(arr2); 
     Vallets.sort(byField("Cur_Abbreviation"));
       for (let item of DefaultVallet) {
-        CreateValletCurrency(Vallets[Vallets.findIndex(el => el.Cur_Abbreviation == item)])
+        CreateValletCurrency(Vallets[Vallets.findIndex(el => el.Cur_Abbreviation == item)],false)
       }
+      if(UserVallets != undefined){
+      for (let item of UserVallets) {
+        CreateValletCurrency(Vallets[Vallets.findIndex(el => el.Cur_Abbreviation == item)],true)
+      }
+    }
     getEl(".USD").value = 1
     CalculateVallet( getEl(".USD"))
     BYNel.addEventListener("input",() => {CalculateVallet(BYNel)})
@@ -87,6 +110,18 @@ async function GetValletArray(){
   }
     }
 
+
+function SaveUserVallets(){
+  let Els = getEls(".ValletChoice")
+  let UserVall = []
+  for (let item of Els) {
+    if(item.dataset.choiced == "true"){
+      let index = item.id.slice(2)
+      UserVall.push(Vallets[index].Cur_Abbreviation)
+    }
+  }
+  localStorage.setItem("UserVallets",JSON.stringify(UserVall))
+}
 
 
 function CalculateVallet(El){
@@ -118,13 +153,14 @@ for (let item of Arr) {
 
 
 function CreateValletCurrency(Vallet,AddDelete){
+  
  ValletIndex = Vallets.findIndex(el => el.Cur_Abbreviation === Vallet.Cur_Abbreviation)
 
   let DivOsnova = createEl("div")
   DivOsnova.classList.add("DivOsnova")
   DivOsnova.id = `Index${ValletIndex}`
 
-  AddDelete = AddDelete || false 
+  //AddDelete = AddDelete || true
 
 
   let div = createEl("div")
@@ -149,14 +185,41 @@ function CreateValletCurrency(Vallet,AddDelete){
   InputAnotherVallet.dataset.index = ValletIndex
   InputAnotherVallet.id = "INPUT"
   InputAnotherVallet.classList.add(`${Vallet.Cur_Abbreviation}`);
-  InputAnotherVallet.dataset.gays = JSON.stringify(DivOsnova);
+
+
+  let DeleteButton = createEl("img")
+  DeleteButton.dataset.index = ValletIndex
+  DeleteButton.src = "krest.png"
+  DeleteButton.classList.add("DeleteButton")
+  DeleteButton.addEventListener("click",(event) => {document.querySelector(`#in${event.target.dataset.index}`).click()})
+  
 
   getEl(".forAnotherVallets").append(DivOsnova)
   DivOsnova.append(div)
   div.append(Abbreviation)
   div.append(InputAnotherVallet)
   div.after(name)
+  if(AddDelete){div.after(DeleteButton)}
+
+  CalculateVallet(BYNel)
 
 }
+
+//work with BodyColor
+
+let InputColor = document.querySelector("#InputColor")
+
+if(localStorage.getItem("BodyColor") != undefined){
+  document.body.style.background  = `linear-gradient(0deg, rgb(210, 238, 255) 0%, ${localStorage.getItem("BodyColor")} 100%)`
+  InputColor.value = localStorage.getItem("BodyColor")
+}
+
+
+InputColor.addEventListener("input",()=>{
+  document.body.style.background  = `linear-gradient(0deg, rgb(210, 238, 255) 0%, ${InputColor.value} 100%)`
+  localStorage.setItem("BodyColor",`${InputColor.value}`)
+})
+
+
 
 GetValletArray()
